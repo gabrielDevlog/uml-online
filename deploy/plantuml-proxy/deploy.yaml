@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uml-plantuml-proxy
+spec:
+  selector:
+    matchLabels:
+      app: uml-plantuml-proxy
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: uml-plantuml-proxy
+    spec:
+      containers:
+        - name: api
+          image: gabriellonestone/uml-plantuml-proxy-api:<VERSION>
+          imagePullPolicy: Always
+          ports:
+            - name: listen-port
+              containerPort: 3000
+        - name: front
+          image: gabriellonestone/uml-plantuml-proxy-front:<VERSION>
+          imagePullPolicy: Always
+          ports:
+            - name: listen-port
+              containerPort: 80
+        - name: uml-plantuml
+          image: plantuml/plantuml-server:tomcat
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uml-plantuml-proxy-api
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp
+      port: 80
+      targetPort: 3000
+  selector:
+    app: uml-plantuml-proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uml-plantuml-proxy-front
+spec:
+  type: ClusterIP
+  ports:
+    - name: tcp
+      port: 80
+      targetPort: 80
+  selector:
+    app: uml-plantuml-proxy

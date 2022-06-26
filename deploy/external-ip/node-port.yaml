@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-port
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      nodePort: 32080
+      protocol: TCP
+    - name: https
+      port: 443
+      targetPort: 443
+      nodePort: 32443
+      protocol: TCP
+  selector:
+    app: uml-gateway

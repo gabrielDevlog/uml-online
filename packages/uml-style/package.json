@@ -1,0 +1,8 @@
+{
+  "name": "uml-style",
+  "version": "1.0.0",
+  "main": "src/index.scss",
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  }
+}

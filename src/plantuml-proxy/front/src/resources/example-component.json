@@ -1,0 +1,4 @@
+{
+  "id": "activity",
+  "text": "@startuml\n\n skinparam svgLinkTarget _blank\n\n [First component]\n [Another component] as Comp2\n component Comp3\n component [Last\\ncomponent] as Comp4\n \n note bottom of Comp3\n More [[https://plantuml.com/fr/component-diagram component syntax]] on plantuml\n end note\n@enduml"
+}

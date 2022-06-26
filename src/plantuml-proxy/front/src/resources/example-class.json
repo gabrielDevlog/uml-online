@@ -1,0 +1,4 @@
+{
+  "id": "activity",
+  "text": "@startuml\n\nskinparam svgLinkTarget _blank\n\nclass Car{\n+ syntax: More [[https://plantuml.com/fr/class-diagram class diagram]] syntax on plantuml\n}\n\nDriver - Car : drives >\nCar *- Wheel : have 4 >\nCar -- Person : < owns\n\n@enduml"
+}

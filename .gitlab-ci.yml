@@ -1,0 +1,117 @@
+image: node:10.15.0
+
+services:
+  - docker:dind
+
+cache:
+  key: common-cache-for-pnpm
+  paths:
+    # use pnpm cache: https://github.com/pnpm/pnpm/issues/1174
+    - ~/.pnpm-store/
+
+stages:
+  - build
+  - release
+  - deploy
+
+# Templates
+.release-template-v2: &release-template-v2
+  stage: release
+  image: docker:dind
+  script:
+    - docker build -t $DOCKER_HUB_LOGIN/uml-$PACKAGE_NAME-$KIND:${CI_COMMIT_SHORT_SHA} -f build/$PACKAGE_NAME-$KIND.dockerfile .
+    - echo $DOCKER_HUB_PWD | docker login -u $DOCKER_HUB_LOGIN --password-stdin
+    - docker push $DOCKER_HUB_LOGIN/uml-$PACKAGE_NAME-$KIND:${CI_COMMIT_SHORT_SHA}
+
+.deploy-template-v2: &deploy-template-v2
+  stage: deploy
+  image:
+    name: bitnami/kubectl
+    entrypoint: [""]
+  script:
+    # USING https://github.com/stakater/til/blob/master/gitlab/gitlab-ci-pipeline-integration-with-kubernetes.md
+    # AND https://stackoverflow.com/questions/15490728/decode-base64-invalid-input/15490765
+    - mkdir .kube
+    - echo $KUBE_CONFIG | base64 -di > .kube/config
+    - echo $CA_HOU02 | base64 -di > .kube/ca-hou02-uml.pem # for IBM cloud
+    - export KUBECONFIG=.kube/config
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" ./deploy/$PACKAGE_NAME/deploy.yaml
+    - kubectl apply -f ./deploy/$PACKAGE_NAME/deploy.yaml
+
+# BUILD ALL for now
+build:
+  stage: build
+  image: node:10.15.0
+  script:
+    - npm i -g pnpm
+    # remove useless dep from pnpm store: https://github.com/pnpm/pnpm/issues/1174
+    - pnpm store prune
+    - pnpm i
+    - pnpm run build
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - src/gateway/api/dist
+      - src/portal/front/dist
+      - src/plantuml-proxy/api/dist
+      - src/plantuml-proxy/front/dist
+      - src/account/api/dist
+      - src/account/front/dist
+
+# RELEASE STEPS
+release-gateway-api:
+  variables:
+    PACKAGE_NAME: gateway
+    KIND: api
+  <<: *release-template-v2
+
+release-plantuml-api:
+  variables:
+    PACKAGE_NAME: plantuml-proxy
+    KIND: api
+  <<: *release-template-v2
+
+release-plantuml-front:
+  variables:
+    PACKAGE_NAME: plantuml-proxy
+    KIND: front
+  <<: *release-template-v2
+
+release-portal-front:
+  variables:
+    PACKAGE_NAME: portal
+    KIND: front
+  <<: *release-template-v2
+
+release-account-api:
+  variables:
+    PACKAGE_NAME: account
+    KIND: api
+  <<: *release-template-v2
+
+release-account-front:
+  variables:
+    PACKAGE_NAME: account
+    KIND: front
+  <<: *release-template-v2
+
+# DEPLOY STEPS
+deploy-portal:
+  variables:
+    PACKAGE_NAME: portal
+  <<: *deploy-template-v2
+
+deploy-gateway-api:
+  variables:
+    PACKAGE_NAME: gateway
+  <<: *deploy-template-v2
+
+deploy-plantuml:
+  variables:
+    PACKAGE_NAME: plantuml-proxy
+  <<: *deploy-template-v2
+
+deploy-account:
+  variables:
+    PACKAGE_NAME: account
+  <<: *deploy-template-v2

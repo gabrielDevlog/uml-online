@@ -1,0 +1,50 @@
+{
+  "name": "account-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prestart": "npm i typescript ts-node-dev typeorm pg && node ./dist/db/init/createDatabase.js && npm run typeorm:prod migration:run",
+    "start": "node dist/index.js",
+    "predev": "ts-node-dev -r dotenv-extended/config ./src/db/init/createDatabase.ts && pnpm run typeorm:dev migration:run",
+    "dev": "ts-node-dev -r dotenv-extended/config ./src/index.ts",
+    "build": "webpack --config webpack/webpack-prod.config.js",
+    "typeorm:dev": "ts-node-dev -r dotenv-extended/config ./node_modules/typeorm/cli.js --config ./src/db/ormconfig",
+    "typeorm:prod": "ts-node-dev ./node_modules/typeorm/cli.js --config ./dist/db/ormconfig"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^6.10.13",
+    "@nestjs/core": "^6.10.13",
+    "@nestjs/jwt": "^6.1.1",
+    "@nestjs/passport": "^6.1.1",
+    "@nestjs/platform-express": "^6.10.13",
+    "@nestjs/typeorm": "^6.2.0",
+    "account-shared": "*",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
+    "dotenv-extended": "^2.7.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "pg": "^7.17.1",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.4",
+    "typeorm": "^0.2.22",
+    "uml-jwt": "*"
+  },
+  "devDependencies": {
+    "@types/passport-jwt": "^3.0.3",
+    "@types/pg": "^7.14.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "glob": "^7.1.6",
+    "ts-loader": "^6.2.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dotenv-extended-plugin": "^1.0.0",
+    "webpack-watched-glob-entries-plugin": "^2.1.5"
+  }
+}

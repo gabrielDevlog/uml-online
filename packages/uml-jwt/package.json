@@ -1,0 +1,11 @@
+{
+  "name": "uml-jwt",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "jwt-decode": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/jwt-decode": "^2.2.1"
+  }
+}

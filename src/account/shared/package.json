@@ -1,0 +1,8 @@
+{
+  "name": "account-shared",
+  "version": "1.0.0",
+  "dependencies": {
+    "class-validator": "^0.11.0"
+  },
+  "devDependencies": {}
+}

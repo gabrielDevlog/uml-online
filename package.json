@@ -1,0 +1,35 @@
+{
+  "name": "uml",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "node --eval \"!process.env.npm_config_user_agent.startsWith('pnpm/')&&(console.log('Use `pnpm install` to install dependencies in this repository')||true)&&process.exit(1)\"",
+    "dev": " ultra -r --filter 'src/*' dev",
+    "build": "ultra -r --no-pretty --filter 'src/*' build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/GitBalou/uml.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/GitBalou/uml/issues"
+  },
+  "homepage": "https://gitlab.com/GitBalou/uml#readme",
+  "devDependencies": {
+    "ultra-runner": "^3.2.2"
+  },
+  "description": ""
+}
+
+kubernetes
+docker
+gitlab-ci
+typescript
+monorepo
+pnpm
+typescript
+nestjs
+react
+micro services

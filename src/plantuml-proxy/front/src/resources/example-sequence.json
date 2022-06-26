@@ -1,0 +1,4 @@
+{
+  "id": "activity",
+  "text": "@startuml\n\nskinparam svgLinkTarget _blank\n\nAlice -> Bob: Authentication Request\nBob --> Alice: Authentication Response\n\nAlice -> Bob: Another authentication Request\nAlice <-- Bob:  More [[https://plantuml.com/fr/sequence-diagram sequence diagram]] syntax on plantuml\n@enduml"
+}

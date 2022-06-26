@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "esNext",
+    "target": "es5",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "rootDir": "src"
+  },
+  "exclude": ["demo", "__tests__"]
+}

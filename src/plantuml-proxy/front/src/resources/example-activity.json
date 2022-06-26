@@ -1,0 +1,4 @@
+{
+  "id": "activity",
+  "text": "@startuml\n\nskinparam svgLinkTarget _blank\n\nstart\n:Hello world;\n:This is on defined on\nseveral **lines**;\n:More [[https://plantuml.com/fr/activity-diagram-beta activity diagram]] syntax on plantuml;\nstop\n@enduml"
+}

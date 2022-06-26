@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es5",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "lib": ["ES2015", "DOM"]
+  },
+  "exclude": ["demo", "__tests__"]
+}

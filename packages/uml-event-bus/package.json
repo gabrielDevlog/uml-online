@@ -1,0 +1,9 @@
+{
+  "name": "uml-event-bus",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "eev": "^0.1.5"
+  },
+  "devDependencies": {}
+}
